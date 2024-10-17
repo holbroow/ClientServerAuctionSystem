@@ -1,3 +1,8 @@
+/**
+ * AuctionItem object containing variables to describe an item for sale.
+ * 
+ * @author holbroow
+ */
 public class AuctionItem implements java.io.Serializable {
     int itemID;
     String name;
