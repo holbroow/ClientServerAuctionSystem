@@ -69,7 +69,7 @@ public class Client {
             System.out.printf("Auction Item: %s - %s - Current Highest Bid: %d\n\n", result.name, result.description, result.highestBid);
         } catch (Exception e) {
             System.err.println("Exception:");
-            e.printStackTrace();
+            System.err.println("Error starting server.");
         }
     }
 }

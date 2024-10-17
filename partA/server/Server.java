@@ -31,23 +31,6 @@ public class Server implements Auction {
         items.add(new AuctionItem(0, "Table", "A vintage mahogany table."));
         items.add(new AuctionItem(0, "Roman Coin", "A delicate coin from the roman era."));
 
-        // // Generate and store an AES key to encrypt and for the client to decrypt with.
-        // try {
-        //     cipher = Cipher.getInstance( "AES" );
-
-        //     File keyFile = new File("key.txt");
-        //     Scanner s = new Scanner(keyFile);
-            
-        //     plainKey = s.nextLine();
-        //     byte[] decodedKey = Base64.getDecoder().decode(plainKey);
-        //     key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-
-        //     s.close();
-        // } catch (Exception e) {
-        //     // Incase key.txt not found.
-        //     e.printStackTrace();
-        // }
-
         // Generate random AES key.
         try {
             KeyGenerator keyGen = KeyGenerator.getInstance("AES");
@@ -62,9 +45,9 @@ public class Server implements Auction {
         byte[] keyBytes = key.getEncoded();
         try (FileWriter writer = new FileWriter("../keys/keyFile.aes")) {
             writer.write(Base64.getEncoder().encodeToString(keyBytes));
-            System.out.println("Base64 key written to " + "/keys/keyFile.aes");
+            System.out.println("AES key written to /keys/keyFile.aes");
         } catch (IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
+            System.err.println("Error writing to file.");
         }
 
     }
