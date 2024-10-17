@@ -81,7 +81,7 @@ public class Server implements Auction {
     public static void main(String[] args) {
         try {
             Server s = new Server();
-            String name = "myserver";
+            String name = "Auction";
 
             Auction stub = (Auction) UnicastRemoteObject.exportObject(s, 0);
 

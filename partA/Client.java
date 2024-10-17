@@ -57,7 +57,7 @@ public class Client {
 
         // Connect to server and receive the encrypted object, before decrypting it and printing out its respective variables.
         try {
-            String name = "myserver";
+            String name = "Auction";
             Registry registry = LocateRegistry.getRegistry("localhost", 0);
             Auction server = (Auction) registry.lookup(name);
 
