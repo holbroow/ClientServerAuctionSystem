@@ -66,10 +66,9 @@ public class Client {
             AuctionItem result = (AuctionItem) receivedObject.getObject(cipher);
             
             System.out.println("Matching AuctionItem retrieved.");
-            System.out.printf("Auction Item: %s - %s - Current Highest Bid: %d\n\n", result.name, result.description, result.highestBid);
+            System.out.printf("Auction Item: %s - %s - Current Highest Bid: %d\n\n", result.getName(), result.getDescription(), result.getHighestBid());
         } catch (Exception e) {
-            System.err.println("Exception:");
-            System.err.println("Error starting server.");
+            System.err.println("Error, does the auction item exist on the server?");
         }
     }
 }

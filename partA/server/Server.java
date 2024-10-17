@@ -27,9 +27,11 @@ public class Server implements Auction {
         super();
         // A hard-coded ArrayList of items to be browsed.
         items = new ArrayList<>();
-        items.add(new AuctionItem(0, "Vase", "A lovely china vase."));
-        items.add(new AuctionItem(0, "Table", "A vintage mahogany table."));
-        items.add(new AuctionItem(0, "Roman Coin", "A delicate coin from the roman era."));
+        items.add(new AuctionItem(1, "Vase", "A lovely china vase."));
+        items.add(new AuctionItem(2, "Table", "A vintage mahogany table."));
+        items.add(new AuctionItem(3, "Roman Coin", "A delicate coin from the roman era."));
+        items.add(new AuctionItem(4, "Silver Watch", "A stylish wrist watch."));
+        items.add(new AuctionItem(5, "Mirror", "A mirror, refurbished to perfection."));
 
         // Generate random AES key.
         try {
@@ -59,11 +61,16 @@ public class Server implements Auction {
             cipher.init( Cipher.ENCRYPT_MODE, key );
             
             // Get object from ArrayList.
-            AuctionItem plainObject = items.get(n);
-        
-            // Return the encrypted version using the cipher, and inform the server user.
-            System.out.println("client request handled");
-            return new SealedObject(plainObject, cipher);
+            for (AuctionItem item : items) {
+                if (item.getItemID() == n) {
+                    // Return the encrypted version using the cipher, and inform the server user.
+                    System.out.println("client request handled");
+                    return new SealedObject(item, cipher);
+                }
+            }
+            // If item not found, return null and the client will handle the exception.
+            return null;
+
         } catch (Exception e) {
             e.printStackTrace();
             return null;
