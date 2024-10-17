@@ -45,9 +45,9 @@ public class Server implements Auction {
         
         // Store the generated key in a file.
         byte[] keyBytes = key.getEncoded();
-        try (FileWriter writer = new FileWriter("../keys/keyFile.aes")) {
+        try (FileWriter writer = new FileWriter("../keys/testKey.aes")) {
             writer.write(Base64.getEncoder().encodeToString(keyBytes));
-            System.out.println("AES key written to /keys/keyFile.aes");
+            System.out.println("AES key written to /keys/testKey.aes");
         } catch (IOException e) {
             System.err.println("Error writing to file.");
         }

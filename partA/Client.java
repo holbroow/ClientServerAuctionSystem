@@ -41,9 +41,9 @@ public class Client {
             System.err.println("No such padding for cipher creation.");
         }
 
-        // Read the keyFile.aes file, if existing, and store and convert the String to a usable key for decryption.
+        // Read the testKey.aes file, if existing, and store and convert the String to a usable key for decryption.
         try {
-            File keyFile = new File("keys/keyFile.aes");
+            File keyFile = new File("keys/testKey.aes");
             Scanner s = new Scanner(keyFile);
             
             plainKey = s.nextLine();
@@ -52,7 +52,7 @@ public class Client {
             
             s.close();
         } catch (FileNotFoundException e) {
-            System.err.println("keyFile.aes not found, required for client side decryption.");
+            System.err.println("testKey.aes not found, required for client side decryption.");
         }
 
         // Connect to server and receive the encrypted object, before decrypting it and printing out its respective variables.
