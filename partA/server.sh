@@ -1,5 +1,6 @@
 #!/bin/bash
 
-gnome-terminal -- bash -c "cd \"$(pwd)/server\" && rmiregistry; exec bash"
+cd server
+rmiregistry &
 sleep 2
-gnome-terminal -- bash -c "cd \"$(pwd)/server\" && java Server; exec bash"
+java Server
