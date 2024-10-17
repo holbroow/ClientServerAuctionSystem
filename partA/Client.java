@@ -1,10 +1,13 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
+import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Scanner;
 
 import javax.crypto.Cipher;
+import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -29,12 +32,18 @@ public class Client{
     // Assign said command line argument.
     int n = Integer.parseInt(args[0]);
 
-    // Read the key.txt file, if existing, and store and convert the String to a usable key for decryption.
+    // Create cipher for use with decryption.
     try {
-        // Create AES cipher for decryption.
-        cipher = Cipher.getInstance( "AES" );
+      cipher = Cipher.getInstance( "AES" );
+      } catch (NoSuchAlgorithmException e) {
+        System.err.println("Algorithm for key not found.");
+      } catch (NoSuchPaddingException e) {
+        System.err.println("No such padding for cipher creation.");
+      }
 
-        File keyFile = new File("key.txt");
+    // Read the keyFile.aes file, if existing, and store and convert the String to a usable key for decryption.
+    try {
+        File keyFile = new File("keys/keyFile.aes");
         Scanner s = new Scanner(keyFile);
         
         plainKey = s.nextLine();
@@ -42,9 +51,8 @@ public class Client{
         key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         
         s.close();
-    } catch (Exception e) {
-        // Incase key.txt not found.
-        e.printStackTrace();
+    } catch (FileNotFoundException e) {
+        System.err.println("keyFile.aes not found, required for client side decryption.");
     }
 
     // Connect to server and recieve the encypted object, before decrypting it and printing out it's respective variables.
