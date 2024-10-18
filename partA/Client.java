@@ -1,5 +1,7 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.security.NoSuchAlgorithmException;
@@ -41,18 +43,17 @@ public class Client {
             System.err.println("No such padding for cipher creation.");
         }
 
-        // Read the testKey.aes file, if existing, and store and convert the String to a usable key for decryption.
-        try {
-            File keyFile = new File("keys/testKey.aes");
-            Scanner s = new Scanner(keyFile);
-            
-            plainKey = s.nextLine();
-            byte[] decodedKey = Base64.getDecoder().decode(plainKey);
-            key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
-            
-            s.close();
-        } catch (FileNotFoundException e) {
-            System.err.println("testKey.aes not found, required for client side decryption.");
+        // Read the testKey.aes file to use the key for decryption.
+        byte[] keyBytes = new byte[16];
+        try (FileInputStream fis = new FileInputStream("keys/testKey.aes")) {
+            int bytesRead = fis.read(keyBytes);
+            if (bytesRead != keyBytes.length) {
+                throw new IOException("Could not read the full AES key from file. Is the server running? / Has it generated a key?");
+            } else {
+                key = new SecretKeySpec(keyBytes, "AES");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         // Connect to server and receive the encrypted object, before decrypting it and printing out its respective variables.

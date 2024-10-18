@@ -1,3 +1,4 @@
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
@@ -45,9 +46,10 @@ public class Server implements Auction {
         
         // Store the generated key in a file.
         byte[] keyBytes = key.getEncoded();
-        try (FileWriter writer = new FileWriter("../keys/testKey.aes")) {
-            writer.write(Base64.getEncoder().encodeToString(keyBytes));
+        try (FileOutputStream fos = new FileOutputStream("../keys/testKey.aes")) {
+            fos.write(keyBytes);
             System.out.println("AES key written to /keys/testKey.aes");
+            fos.close();
         } catch (IOException e) {
             System.err.println("Error writing to file.");
         }
